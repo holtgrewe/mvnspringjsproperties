@@ -11,12 +11,30 @@
 
 	<context:component-scan base-package="de.bihealth.cubi.mvnspringjspproperties" />
 
+	<!-- Configure loading of application.properties (for welcome1 and welcome2) -->
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:application.properties</value>
+			</list>
+		</property>
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+	</bean>
+
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
+
+		<!-- Expose global configuration in all views (for welcome). -->
+		<property name="exposedContextBeanNames">
+			<list>
+				<value>globalConfig</value>
+			</list>
+		</property>
 	</bean>
 
 </beans>
